@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #todo-form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #todo-input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #add-button {
+            padding: 10px;
+            margin-left: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #add-button:hover {
+            background-color: #218838;
+        }
+        #todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            background: white;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .todo-item.completed {
+            text-decoration: line-through;
+            color: #aaa;
+        }
+        .checkbox {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lista de Tarefas</h1>
+    <div id="todo-form">
+        <input type="text" id="todo-input" placeholder="Adicione uma nova tarefa...">
+        <button id="add-button">Adicionar</button>
+    </div>
+    <ul id="todo-list"></ul>
+
+    <script>
+        const addButton = document.getElementById('add-button');
+        const todoInput = document.getElementById('todo-input');
+        const todoList = document.getElementById('todo-list');
+
+        addButton.addEventListener('click', () => {
+            const taskText = todoInput.value.trim();
+            if (taskText) {
+                const listItem = document.createElement('li');
+                listItem.className = 'todo-item';
+                listItem.innerHTML = `
+                    <input type="checkbox" class="checkbox">
+                    <span>${taskText}</span>
+                `;
+                todoList.appendChild(listItem);
+                todoInput.value = '';
+
+                const checkbox = listItem.querySelector('.checkbox');
+                checkbox.addEventListener('change', () => {
+                    listItem.classList.toggle('completed', checkbox.checked);
+                });
+            }
+        });
+
+        todoInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                addButton.click();
+            }
+        });
+    </script>
+
+</body>
+</html>
